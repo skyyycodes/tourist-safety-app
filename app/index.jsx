@@ -46,6 +46,8 @@ const Home = () => {
         return <Text style={styles.content}>Journey Screen Content</Text>
       case 'Report':
         return <Text style={styles.content}>Report Screen Content</Text>
+      case 'Chat':
+        return <Text style={styles.content}>Chat Screen Content</Text>
       case 'Profile':
         return <Text style={styles.content}>Profile Screen Content</Text>
       default:

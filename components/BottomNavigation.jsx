@@ -20,6 +20,11 @@ const BottomNavigation = ({ onTabChange, activeTab = 'Home' }) => {
       activeIcon: 'document-text'
     },
     {
+      name: 'Chat',
+      icon: 'chatbubble-outline',
+      activeIcon: 'chatbubble'
+    },
+    {
       name: 'Profile',
       icon: 'person-outline',
       activeIcon: 'person'
