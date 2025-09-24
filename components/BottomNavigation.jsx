@@ -75,23 +75,10 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     backgroundColor: '#FFFFFF',
-    paddingVertical: 12,
-    paddingHorizontal: 16,
+    paddingVertical:1,
+    paddingHorizontal: 12,
     borderTopWidth: 1,
     borderTopColor: '#E5E5EA',
-    // Replace deprecated shadow props with boxShadow for web
-    ...(Platform.OS === 'web' ? {
-      boxShadow: '0px -2px 3.84px rgba(0, 0, 0, 0.1)',
-    } : {
-      shadowColor: '#000',
-      shadowOffset: {
-        width: 0,
-        height: -2,
-      },
-      shadowOpacity: 0.1,
-      shadowRadius: 3.84,
-      elevation: 5,
-    }),
   },
   tabItem: {
     flex: 1,

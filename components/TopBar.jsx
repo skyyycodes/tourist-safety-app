@@ -5,7 +5,7 @@ import Constants from 'expo-constants'
 
 const TopBar = ({ onProfilePress, onNotificationPress }) => {
   return (
-    <View style={[styles.container, { paddingTop: Constants.statusBarHeight}]}>
+    <View style={[styles.container, { paddingTop: Constants.statusBarHeight - 25}]}>
       {/* Title */}
       <Text style={styles.title}>Smart Tourist Safety</Text>
       
@@ -46,23 +46,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingHorizontal: 16,
-    paddingBottom: 16,
+    paddingBottom:10,
     backgroundColor: '#FFFFFF',
+    borderTopWidth: 0,
     borderBottomWidth: 1,
     borderBottomColor: '#E5E5EA',
-    // Replace deprecated shadow props with boxShadow for web
-    ...(Platform.OS === 'web' ? {
-      boxShadow: '0px 1px 2px rgba(0, 0, 0, 0.1)',
-    } : {
-      shadowColor: '#000',
-      shadowOffset: {
-        width: 0,
-        height: 1,
-      },
-      shadowOpacity: 0.1,
-      shadowRadius: 2,
-      elevation: 2,
-    }),
+    minHeight: 40,
   },
   title: {
     fontSize: 18,
