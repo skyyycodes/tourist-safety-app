@@ -1,39 +1,32 @@
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
-import React, { useState } from 'react'
-import { Ionicons, MaterialIcons } from '@expo/vector-icons'
+import { StyleSheet, Text, View, TouchableOpacity, Platform } from 'react-native'
+import React from 'react'
+import { Ionicons } from '@expo/vector-icons'
 
-const BottomNavigation = ({ onTabChange }) => {
-  const [activeTab, setActiveTab] = useState('Home')
-
+const BottomNavigation = ({ onTabChange, activeTab = 'Home' }) => {
   const tabs = [
     {
       name: 'Home',
       icon: 'home-outline',
-      activeIcon: 'home',
-      iconLibrary: 'Ionicons'
+      activeIcon: 'home'
     },
     {
       name: 'Journey',
       icon: 'map-outline',
-      activeIcon: 'map',
-      iconLibrary: 'Ionicons'
+      activeIcon: 'map'
     },
     {
       name: 'Report',
       icon: 'document-text-outline',
-      activeIcon: 'document-text',
-      iconLibrary: 'Ionicons'
+      activeIcon: 'document-text'
     },
     {
       name: 'Profile',
       icon: 'person-outline',
-      activeIcon: 'person',
-      iconLibrary: 'Ionicons'
+      activeIcon: 'person'
     }
   ]
 
   const handleTabPress = (tabName) => {
-    setActiveTab(tabName)
     if (onTabChange) {
       onTabChange(tabName)
     }
@@ -41,10 +34,9 @@ const BottomNavigation = ({ onTabChange }) => {
 
   const renderIcon = (tab, isActive) => {
     const iconName = isActive ? tab.activeIcon : tab.icon
-    const IconComponent = tab.iconLibrary === 'Ionicons' ? Ionicons : MaterialIcons
     
     return (
-      <IconComponent 
+      <Ionicons 
         name={iconName} 
         size={24} 
         color={isActive ? '#4A90E2' : '#8E8E93'} 
@@ -87,14 +79,19 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     borderTopWidth: 1,
     borderTopColor: '#E5E5EA',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: -2,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 3.84,
-    elevation: 5,
+    // Replace deprecated shadow props with boxShadow for web
+    ...(Platform.OS === 'web' ? {
+      boxShadow: '0px -2px 3.84px rgba(0, 0, 0, 0.1)',
+    } : {
+      shadowColor: '#000',
+      shadowOffset: {
+        width: 0,
+        height: -2,
+      },
+      shadowOpacity: 0.1,
+      shadowRadius: 3.84,
+      elevation: 5,
+    }),
   },
   tabItem: {
     flex: 1,
