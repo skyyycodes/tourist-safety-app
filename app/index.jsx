@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react'
 import { StatusBar } from 'expo-status-bar'
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context'
 import { BottomNavigation, TopBar } from '../components'
-import { HomeScreen } from '../screens'
+import { HomeScreen, ReportScreen } from '../screens'
 
 const Home = () => {
   const [activeTab, setActiveTab] = useState('Home')
@@ -45,7 +45,7 @@ const Home = () => {
       case 'Journey':
         return <Text style={styles.content}>Journey Screen Content</Text>
       case 'Report':
-        return <Text style={styles.content}>Report Screen Content</Text>
+        return <ReportScreen />
       case 'Chat':
         return <Text style={styles.content}>Chat Screen Content</Text>
       case 'Profile':
