@@ -3,12 +3,13 @@ import React, { useState, useEffect } from 'react'
 import { StatusBar } from 'expo-status-bar'
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context'
 import { BottomNavigation, TopBar } from '../components'
-import { HomeScreen, ReportScreen, JourneyScreen, ChatScreen, ProfileScreen, LoginScreen, SignupScreen } from '../screens'
+import { HomeScreen, ReportScreen, JourneyScreen, ChatScreen, ProfileScreen, LoginScreen, SignupScreen, OnboardingScreen } from '../screens'
 
 const Home = () => {
   const [activeTab, setActiveTab] = useState('Home')
-  const [isAuthenticated, setIsAuthenticated] = useState(true) // Change to false to show login first
+  const [isAuthenticated, setIsAuthenticated] = useState(false) // Start with login page
   const [authScreen, setAuthScreen] = useState('login') // 'login' or 'signup'
+  const [showOnboarding, setShowOnboarding] = useState(true) // Show onboarding first
 
   // Add error handling for async operations (web only)
   useEffect(() => {
@@ -54,6 +55,11 @@ const Home = () => {
     setIsAuthenticated(false)
     setAuthScreen('login')
     setActiveTab('Home')
+    setShowOnboarding(true) // Show onboarding again after logout
+  }
+
+  const handleOnboardingComplete = () => {
+    setShowOnboarding(false)
   }
 
   const handleNavigateToSignup = () => {
@@ -85,7 +91,10 @@ const Home = () => {
     <SafeAreaProvider>
       <View style={styles.outerContainer}>
         <StatusBar style="dark" translucent={false} />
-        {!isAuthenticated ? (
+        {showOnboarding ? (
+          // Onboarding Flow
+          <OnboardingScreen onComplete={handleOnboardingComplete} />
+        ) : !isAuthenticated ? (
           // Authentication Flow
           authScreen === 'login' ? (
             <LoginScreen 
