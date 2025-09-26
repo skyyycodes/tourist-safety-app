@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 
-const ProfileScreen = () => {
+const ProfileScreen = ({ onLogout }) => {
   const [locationSharing, setLocationSharing] = useState(true);
   const [emergencyAlerts, setEmergencyAlerts] = useState(true);
   const [safetyNotifications, setSafetyNotifications] = useState(true);
@@ -142,7 +142,7 @@ const ProfileScreen = () => {
   const handleLogout = () => {
     Alert.alert('Logout', 'Are you sure you want to logout?', [
       { text: 'Cancel', style: 'cancel' },
-      { text: 'Logout', style: 'destructive', onPress: () => Alert.alert('Logged out') }
+      { text: 'Logout', style: 'destructive', onPress: () => onLogout && onLogout() }
     ]);
   };
 

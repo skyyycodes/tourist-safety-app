@@ -3,10 +3,12 @@ import React, { useState, useEffect } from 'react'
 import { StatusBar } from 'expo-status-bar'
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context'
 import { BottomNavigation, TopBar } from '../components'
-import { HomeScreen, ReportScreen, JourneyScreen, ChatScreen, ProfileScreen } from '../screens'
+import { HomeScreen, ReportScreen, JourneyScreen, ChatScreen, ProfileScreen, LoginScreen, SignupScreen } from '../screens'
 
 const Home = () => {
   const [activeTab, setActiveTab] = useState('Home')
+  const [isAuthenticated, setIsAuthenticated] = useState(true) // Change to false to show login first
+  const [authScreen, setAuthScreen] = useState('login') // 'login' or 'signup'
 
   // Add error handling for async operations (web only)
   useEffect(() => {
@@ -38,6 +40,30 @@ const Home = () => {
     Alert.alert('Notifications', 'You have no new notifications')
   }
 
+  const handleLogin = () => {
+    setIsAuthenticated(true)
+    setActiveTab('Home')
+  }
+
+  const handleSignup = () => {
+    setIsAuthenticated(true)
+    setActiveTab('Home')
+  }
+
+  const handleLogout = () => {
+    setIsAuthenticated(false)
+    setAuthScreen('login')
+    setActiveTab('Home')
+  }
+
+  const handleNavigateToSignup = () => {
+    setAuthScreen('signup')
+  }
+
+  const handleNavigateToLogin = () => {
+    setAuthScreen('login')
+  }
+
   const renderContent = () => {
     switch(activeTab) {
       case 'Home':
@@ -49,7 +75,7 @@ const Home = () => {
       case 'Chat':
         return <ChatScreen />
       case 'Profile':
-        return <ProfileScreen />
+        return <ProfileScreen onLogout={handleLogout} />
       default:
         return <HomeScreen />
     }
@@ -59,19 +85,35 @@ const Home = () => {
     <SafeAreaProvider>
       <View style={styles.outerContainer}>
         <StatusBar style="dark" translucent={false} />
-        <SafeAreaView style={styles.container}>
-          <TopBar 
-            onProfilePress={handleProfilePress}
-            onNotificationPress={handleNotificationPress}
-          />
-          <View style={styles.mainContent}>
-            {renderContent()}
-          </View>
-          <BottomNavigation 
-            onTabChange={handleTabChange} 
-            activeTab={activeTab}
-          />
-        </SafeAreaView>
+        {!isAuthenticated ? (
+          // Authentication Flow
+          authScreen === 'login' ? (
+            <LoginScreen 
+              onLogin={handleLogin}
+              onNavigateToSignup={handleNavigateToSignup}
+            />
+          ) : (
+            <SignupScreen 
+              onSignup={handleSignup}
+              onNavigateToLogin={handleNavigateToLogin}
+            />
+          )
+        ) : (
+          // Main App Flow
+          <SafeAreaView style={styles.container}>
+            <TopBar 
+              onProfilePress={handleProfilePress}
+              onNotificationPress={handleNotificationPress}
+            />
+            <View style={styles.mainContent}>
+              {renderContent()}
+            </View>
+            <BottomNavigation 
+              onTabChange={handleTabChange} 
+              activeTab={activeTab}
+            />
+          </SafeAreaView>
+        )}
       </View>
     </SafeAreaProvider>
   )
